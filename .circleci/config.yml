@@ -7,3 +7,5 @@ workflows:
   maven_test:
     jobs:
       - maven/test # checkout, build, test, and upload test results
+      - bash <(curl -s https://codecov.io/bash) -t "abea7830-9ee2-4e8c-bdb9-60e032c5c163"
+
