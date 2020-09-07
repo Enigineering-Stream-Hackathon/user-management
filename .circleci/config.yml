@@ -16,6 +16,6 @@ workflows:
   maven_test:
     jobs:
       - maven/test # checkout, build, test, and upload test result
-      - codecov/upload
+      - codecov/run
   
 
