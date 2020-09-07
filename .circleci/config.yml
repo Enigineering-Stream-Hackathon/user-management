@@ -1,0 +1,22 @@
+version: 2.1
+
+orbs:
+  maven: circleci/maven@0.0.12
+  codecov: codecov/codecov@1.1.1
+  
+jobs:
+  codecov_upload:
+    docker: # run the steps with Docker
+        - image: circleci/openjdk:8-jdk-stretch
+    steps:
+      - codecov/upload:
+          token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
+
+workflows:
+  maven_test:
+    jobs:
+      - maven/test # checkout, build, test, and upload test result
+  codecov_workflow:
+    jobs:
+      - codecov_upload
+
