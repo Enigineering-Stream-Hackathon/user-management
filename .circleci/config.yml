@@ -6,6 +6,8 @@ orbs:
   
 jobs:
   build:
+    docker: # run the steps with Docker
+        - image: circleci/openjdk:8-jdk-stretch
     steps:
       - codecov/upload:
           token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
