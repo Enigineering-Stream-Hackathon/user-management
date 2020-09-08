@@ -24,17 +24,20 @@ jobs:
         - run:
             name: Run Tests
             command: mvn package
-
         - save_cache:
             paths:
               - ~/.m2
             key: user-management-{{ checksum  "~/pom-checksum" }}
-
+        - run:
+            name: Save test results
+            command: |
+              mkdir -p ~/test-results/junit/
+              find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+            when: always
         - store_test_results:
-            path: target/surefire-reports
-
-        - store_artifacts: # store the uberjar as an artifact
-            path: target/
+            path: ~/test-results
+        - store_artifacts:
+            path: user-management\bootstrap\target\bootstrap-1.0-SNAPSHOT.jar
 
   codecov_upload:
     docker: # run the steps with Docker
@@ -42,6 +45,7 @@ jobs:
     steps:
       - codecov/upload:
           token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
+          file: user-management\bootstrap\target\site\jacoco-aggregate\jacoco.xml
 
 workflows:
   build_workflow:
