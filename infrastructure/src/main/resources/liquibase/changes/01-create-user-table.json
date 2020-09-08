@@ -1,0 +1,43 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "01-create-user-table",
+        "author": "thor",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "T_USER",
+              "columns": [
+                {
+                  "column": {
+                    "name": "ID",
+                    "type": "varchar(50)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "NAME",
+                    "type": "varchar(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "ROLES",
+                    "type": "varchar(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "PASSWORD",
+                    "type": "varchar(100)"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
