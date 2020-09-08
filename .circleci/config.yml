@@ -37,7 +37,7 @@ jobs:
         - store_test_results:
             path: ~/test-results
         - store_artifacts:
-            path: user-management\bootstrap\target\bootstrap-1.0-SNAPSHOT.jar
+            path: bootstrap/target/bootstrap-1.0-SNAPSHOT.jar
 
   codecov_upload:
     docker: # run the steps with Docker
@@ -45,7 +45,7 @@ jobs:
     steps:
       - codecov/upload:
           token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
-          file: user-management\bootstrap\target\site\jacoco-aggregate\jacoco.xml
+          file: bootstrap/target/site/jacoco-aggregate/jacoco.xml
 
 workflows:
   build_workflow:
