@@ -1,10 +1,41 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@0.0.12
   codecov: codecov/codecov@1.1.1
   
 jobs:
+  build:
+    working_directory: ~/user-management
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+  steps:
+      - checkout
+      - run:
+          name: Generate cumulative pom.xml checksum
+          command: |
+            find . -type f -name "pom.xml" -exec sh -c "sha256sum {} >> ~/pom-checksum.tmp" \;
+            sort -o ~/pom-checksum ~/pom-checksum.tmp
+          when: always
+      - restore_cache:
+          key: user-management-{{ checksum "~/pom-checksum" }}
+      - run:
+          name: Install Dependencies
+          command: mvn -DskipTests clean install dependency:resolve-plugins dependency:go-offline
+      - run:
+          name: Run Tests
+          command: mvn package
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: user-management-{{ checksum  "~/pom-checksum" }}
+
+      - store_test_results:
+          path: target/surefire-reports
+
+      - store_artifacts: # store the uberjar as an artifact
+          path: target/
+
   codecov_upload:
     docker: # run the steps with Docker
         - image: circleci/openjdk:8-jdk-stretch
@@ -13,9 +44,9 @@ jobs:
           token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
 
 workflows:
-  maven_test:
+  build_workflow:
     jobs:
-      - maven/test # checkout, build, test, and upload test result
+      - build # checkout, build, test, and upload test result
   codecov_workflow:
     jobs:
       - codecov_upload
