@@ -34,6 +34,12 @@ jobs:
               mkdir -p ~/test-results/junit/
               find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
             when: always
+        - run:
+            name: Generate Coverage Report
+            command: mvn verify
+        - codecov/upload:
+            token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
+            file: bootstrap/target/site/jacoco-aggregate/jacoco.xml
         - store_test_results:
             path: ~/test-results
         - store_artifacts:
@@ -43,6 +49,9 @@ jobs:
     docker: # run the steps with Docker
         - image: circleci/openjdk:8-jdk-stretch
     steps:
+      - run:
+          name: Generate Coverage Report
+          command: mvn verify
       - codecov/upload:
           token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
           file: bootstrap/target/site/jacoco-aggregate/jacoco.xml
@@ -51,7 +60,5 @@ workflows:
   build_workflow:
     jobs:
       - build # checkout, build, test, and upload test result
-  codecov_workflow:
-    jobs:
-      - codecov_upload
+
 
