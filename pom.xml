@@ -12,6 +12,7 @@
         <module>domain</module>
         <module>infrastructure</module>
         <module>bootstrap</module>
+        <module>report</module>
     </modules>
 
     <properties>
