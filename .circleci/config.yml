@@ -54,7 +54,7 @@ jobs:
           command: mvn verify
       - codecov/upload:
           token: abea7830-9ee2-4e8c-bdb9-60e032c5c163
-          file: bootstrap/target/site/jacoco-aggregate/jacoco.xml
+          file: report/target/site/jacoco-aggregate/jacoco.xml
 
 workflows:
   build_workflow:
