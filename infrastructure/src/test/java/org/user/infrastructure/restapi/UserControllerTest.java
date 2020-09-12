@@ -1,6 +1,5 @@
 package org.user.infrastructure.restapi;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.user.domain.entities.Role.ADMIN;
@@ -28,13 +27,13 @@ public class UserControllerTest {
   @Test
   public void should_invoke_service_to_create_user() {
     val argumentCaptor = ArgumentCaptor.forClass(UserCommand.class);
-    val request = new UserRequest("john.wick", "John Wick", singletonList(ADMIN), "password");
+    val request = new UserRequest("john.wick", "John Wick", ADMIN, "password");
 
     controller.create(request);
 
     verify(service).create(argumentCaptor.capture());
     assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(
-        new UserCommand("john.wick", "John Wick", singletonList(ADMIN), "password"));
+        new UserCommand("john.wick", "John Wick", ADMIN, "password"));
 
   }
 

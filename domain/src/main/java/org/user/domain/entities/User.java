@@ -1,7 +1,6 @@
 package org.user.domain.entities;
 
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,6 +10,6 @@ public class User {
 
   private String id;
   private String name;
-  private List<Role> roles;
+  private Role role;
   private String password;
 }
