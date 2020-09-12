@@ -27,12 +27,12 @@ public class UserServiceTest {
   @Test
   public void should_call_repository_to_create_user() {
     val argumentCaptor = ArgumentCaptor.forClass(User.class);
-    val command = new UserCommand("john.wick", "John Wick", singletonList(ADMIN), "password");
+    val command = new UserCommand("john.wick", "John Wick", ADMIN, "password");
 
     service.create(command);
 
     verify(repository).save(argumentCaptor.capture());
     assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(
-        new User("john.wick", "John Wick", singletonList(ADMIN), "password"));
+        new User("john.wick", "John Wick", ADMIN, "password"));
   }
 }

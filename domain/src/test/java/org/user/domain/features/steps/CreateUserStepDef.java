@@ -34,7 +34,7 @@ public class CreateUserStepDef {
 
         @Given("an user \"([^\"]*)\" of role \"([^\"]*)\" should be added")
         public void given(String name, Role role){
-                command = new UserCommand(id, name, singletonList(role), "password");
+                command = new UserCommand(id, name, role, "password");
         }
 
         @When("the admin adds the user from the dashboard")
@@ -43,10 +43,10 @@ public class CreateUserStepDef {
         }
 
         @Then("\"([^\"]*)\" with role \"([^\"]*)\" should been created")
-        public void then(String studentName, String address){
+        public void then(String studentName, String role){
                 val actual = testContext.getUsers().stream().filter(it -> it.getId().equals(id)).findFirst().get();
                 assertThat(actual.getName()).isEqualTo(studentName);
-                assertThat(actual.getRoles().get(0).name()).isEqualTo(address);
+                assertThat(actual.getRole().name()).isEqualTo(role);
         }
 
         @After

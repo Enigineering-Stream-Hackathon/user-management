@@ -21,7 +21,7 @@ public class UserController {
 
   @PostMapping(value = "/user", consumes = "application/json")
   public ResponseEntity create(@RequestBody UserRequest request) {
-    log.info("Request received to create user {}", request.getId());
+    log.info("Request received to create user {}", request.getUserName());
     service.create(request.toCommand());
     return status(CREATED).build();
   }
