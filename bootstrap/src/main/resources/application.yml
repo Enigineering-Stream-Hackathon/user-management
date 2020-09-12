@@ -6,17 +6,21 @@ spring:
     name: ${project.parent.artifactId}
 
   datasource:
+    platform: h2
     driverClassName: org.h2.Driver
     jdbcUrl: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: sa
+    liquibase:
+      platform: h2
+      driverClassName: ${spring.datasource.driverClassName}
+      jdbcUrl: ${spring.datasource.jdbcUrl}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+
 
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration
-
-  liquibase:
-    change-log: classpath:/liquibase/db.changelog.json
-    jdbcUrl: ${spring.datasource.jdbcUrl}
 
   h2:
     console:

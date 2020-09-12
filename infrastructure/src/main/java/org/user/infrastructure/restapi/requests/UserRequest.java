@@ -1,6 +1,5 @@
 package org.user.infrastructure.restapi.requests;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +11,12 @@ import org.user.domain.entities.Role;
 @AllArgsConstructor
 public class UserRequest {
 
-  private String id;
+  private String userName;
   private String name;
-  private List<Role> roles;
+  private Role role;
   private String password;
 
   public UserCommand toCommand() {
-    return new UserCommand(id, name, roles, password);
+    return new UserCommand(userName, name, role, password);
   }
 }

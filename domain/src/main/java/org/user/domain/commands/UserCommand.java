@@ -1,6 +1,5 @@
 package org.user.domain.commands;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.user.domain.entities.Role;
@@ -12,10 +11,10 @@ public class UserCommand {
 
   private String id;
   private String name;
-  private List<Role> roles;
+  private Role role;
   private String password;
 
   public User toUser() {
-    return new User(id, name, roles, password);
+    return new User(id, name, role, password);
   }
 }
