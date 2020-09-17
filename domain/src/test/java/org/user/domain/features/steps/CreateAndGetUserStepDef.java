@@ -1,6 +1,5 @@
 package org.user.domain.features.steps;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import cucumber.api.java.After;
@@ -12,20 +11,22 @@ import lombok.val;
 import org.user.domain.UserService;
 import org.user.domain.commands.UserCommand;
 import org.user.domain.entities.Role;
+import org.user.domain.entities.User;
 import org.user.domain.features.stubs.TestContext;
 
-public class CreateUserStepDef {
+public class CreateAndGetUserStepDef {
 
         private TestContext testContext;
         private UserService service;
 
-        public CreateUserStepDef(TestContext testContext, UserService service) {
+        public CreateAndGetUserStepDef(TestContext testContext, UserService service) {
                 this.testContext = testContext;
                 this.service = service;
         }
 
         private UserCommand command;
         private final String id = "lucifer";
+        private User fetchedUser;
 
         @Before
         public void setUp(){
@@ -47,6 +48,24 @@ public class CreateUserStepDef {
                 val actual = testContext.getUsers().stream().filter(it -> it.getId().equals(id)).findFirst().get();
                 assertThat(actual.getName()).isEqualTo(studentName);
                 assertThat(actual.getRole().name()).isEqualTo(role);
+        }
+
+        @Given("([^\"]*) wants to view all her user details and edit")
+        public void given_user_already_exists(String userName){
+                command = new UserCommand(userName, userName, Role.USER, "password");
+                service.create(command);
+        }
+
+        @When("([^\"]*) clicks on edit user")
+        public void when_user_wants_to_view(String userName){
+                fetchedUser = service.findByUserName(userName);
+        }
+
+        @Then("([^\"]*) should able to see her details")
+        public void then_gets_user_details(String userName){
+                assertThat(fetchedUser.getId()).isEqualTo(userName);
+                assertThat(fetchedUser.getName()).isEqualTo(userName);
+                assertThat(fetchedUser.getRole()).isEqualTo(Role.USER);
         }
 
         @After
