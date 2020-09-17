@@ -1,6 +1,5 @@
 package org.user.domain;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.user.domain.entities.Role.ADMIN;
@@ -34,5 +33,17 @@ public class UserServiceTest {
     verify(repository).save(argumentCaptor.capture());
     assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(
         new User("john.wick", "John Wick", ADMIN, "password"));
+  }
+
+
+  @Test
+  public void should_invoke_repository_by_username() {
+    val argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+    service.findByUserName("soubhik");
+
+    verify(repository).getByUserName(argumentCaptor.capture());
+    assertThat(argumentCaptor.getValue()).isEqualTo("soubhik");
+
   }
 }

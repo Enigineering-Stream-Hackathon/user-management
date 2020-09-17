@@ -5,4 +5,6 @@ import org.user.domain.entities.User;
 public interface UserRepository {
 
   void save(User user);
+
+  User getByUserName(String userName);
 }

@@ -37,5 +37,16 @@ public class UserControllerTest {
 
   }
 
+  @Test
+  public void should_invoke_service_to_get_user() {
+    val argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+    controller.findByUserName("soubhik");
+
+    verify(service).findByUserName(argumentCaptor.capture());
+    assertThat(argumentCaptor.getValue()).isEqualTo("soubhik");
+
+  }
+
 
 }
