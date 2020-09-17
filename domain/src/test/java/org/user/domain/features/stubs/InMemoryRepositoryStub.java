@@ -12,4 +12,12 @@ public class InMemoryRepositoryStub implements UserRepository {
     public void save(User user) {
         testContext.addUser(user);
     }
+
+    @Override
+    public User getByUserName(String userName) {
+        return testContext.getUsers().stream()
+            .filter(it -> it.getId().equals(userName))
+            .findFirst()
+            .orElse(null);
+    }
 }
