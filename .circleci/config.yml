@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.1.1
-  heroku: circleci/heroku@0.0.10
 
 jobs:
   build:
@@ -46,15 +45,6 @@ jobs:
       - store_artifacts:
           path: bootstrap/target/bootstrap-1.0-SNAPSHOT.jar
 
-  heroku_deploy:
-    jobs:
-      - build
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
-          requires:
-            - build
-          filters:
-            branches:
-              only: sequential-branch-filter
 
 workflows:
   build_workflow:
